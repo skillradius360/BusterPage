@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
+import Loader from "./Loader";
 
 /* ================= IMAGES ================= */
 
@@ -64,6 +65,9 @@ export default function HeroSection() {
         setError(null);
         setResult(null);
 
+        // Scroll immediately to show the loader
+        setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+
         try {
             const response = await fetch(
                 "https://buster-3.onrender.com/api/fact-check",
@@ -84,11 +88,10 @@ export default function HeroSection() {
             }
 
             setResult(data);
-            setTimeout(() => {
-                resultRef.current?.scrollIntoView({ behavior: "smooth" });
-            }, 100);
+            setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
         } catch (err) {
             setError(err.message);
+            setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
         } finally {
             setIsLoading(false);
         }
@@ -160,6 +163,11 @@ export default function HeroSection() {
                 ref={resultRef}
                 className="px-4 sm:px-6 max-w-4xl mx-auto pb-20"
             >
+                {isLoading && (
+                    <div className="flex justify-center py-10">
+                        <Loader />
+                    </div>
+                )}
                 {error && (
                     <div className="bg-red-50 border border-red-200 p-6 rounded-xl text-center">
                         <div className="text-red-600 font-bold">Analysis Failed</div>
