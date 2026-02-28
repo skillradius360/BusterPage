@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 
 /* ================= IMAGES ================= */
@@ -35,13 +35,13 @@ const rightPositions = [
 
 /* ================= IMAGE CARD ================= */
 
-function ImageCard({ img, style }) {
+function ImageCard({ img, style, className = "" }) {
     return (
         <div
-            className="absolute overflow-hidden rounded-xl border-2 border-white bg-white shadow-lg transition-transform duration-500 hover:z-20 hover:scale-110"
+            className={`absolute overflow-hidden rounded-xl border-2 border-white bg-white shadow-lg transition-transform duration-500 hover:z-20 hover:scale-110 ${className}`}
             style={{ transform: `rotate(${img.rotate})`, ...style }}
         >
-            <div className="relative w-[130px] h-[170px] sm:w-[160px] sm:h-[210px]">
+            <div className="relative h-[120px] w-[90px] sm:h-[170px] sm:w-[130px] lg:h-[210px] lg:w-[160px]">
                 <Image src={img.src} alt={img.label} fill className="object-cover" />
             </div>
         </div>
@@ -99,42 +99,56 @@ export default function HeroSection() {
             {/* ================= HERO SECTION ================= */}
 
             <section className="relative px-4 pt-24 pb-10 sm:px-6">
-                <div className="relative mx-auto max-w-6xl min-h-[480px]">
+                <div className="relative mx-auto max-w-6xl min-h-[420px] sm:min-h-[520px]">
+                    <div className="pointer-events-none absolute inset-0 hidden sm:block">
+                        {leftImages.map((img, i) => (
+                            <ImageCard key={`left-${i}`} img={img} style={leftPositions[i]} />
+                        ))}
 
-                    {leftImages.map((img, i) => (
-                        <ImageCard key={i} img={img} style={leftPositions[i]} />
-                    ))}
+                        {rightImages.map((img, i) => (
+                            <ImageCard key={`right-${i}`} img={img} style={rightPositions[i]} />
+                        ))}
+                    </div>
 
-                    {rightImages.map((img, i) => (
-                        <ImageCard key={i} img={img} style={rightPositions[i]} />
-                    ))}
+                    <div className="relative z-10 mx-auto max-w-2xl pt-10 text-center sm:pt-20">
 
-                    <div className="relative z-10 mx-auto max-w-2xl text-center pt-20">
-
-                        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
+                        <h1 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-6xl">
                             Verify Any Post Instantly
                         </h1>
 
-                        <p className="mt-6 text-sm sm:text-base text-gray-600">
+                        <p className="mx-auto mt-4 max-w-lg text-sm text-gray-600 sm:mt-6 sm:text-base">
                             Paste any Instagram or website link.
                             Buster verifies authenticity using AI.
                         </p>
 
-                        <div className="mt-8 flex items-center rounded-full border bg-white p-2 shadow-xl">
-                            <input
-                                type="url"
-                                value={urlInput}
-                                onChange={(e) => setUrlInput(e.target.value)}
-                                placeholder="Paste the link..."
-                                className="flex-1 px-4 py-3 text-sm outline-none"
-                            />
-                            <button
-                                onClick={handleAnalyze}
-                                disabled={isLoading}
-                                className="rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
-                            >
-                                {isLoading ? "Analyzing..." : "Analyze"}
-                            </button>
+                        <div className="mt-8 flex justify-center gap-3 sm:hidden">
+                            {[leftImages[1], rightImages[1], rightImages[2]].map((img, i) => (
+                                <ImageCard
+                                    key={`mobile-${i}`}
+                                    img={img}
+                                    style={{ position: "relative", top: "auto", left: "auto", right: "auto" }}
+                                    className="relative"
+                                />
+                            ))}
+                        </div>
+
+                        <div className="mt-8 rounded-3xl border bg-white p-2 shadow-xl sm:rounded-full">
+                            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                                <input
+                                    type="url"
+                                    value={urlInput}
+                                    onChange={(e) => setUrlInput(e.target.value)}
+                                    placeholder="Paste the link..."
+                                    className="w-full flex-1 rounded-2xl px-4 py-3 text-sm outline-none sm:rounded-full"
+                                />
+                                <button
+                                    onClick={handleAnalyze}
+                                    disabled={isLoading}
+                                    className="w-full rounded-2xl bg-black px-6 py-3 text-sm font-semibold text-white sm:w-auto sm:rounded-full"
+                                >
+                                    {isLoading ? "Analyzing..." : "Analyze"}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

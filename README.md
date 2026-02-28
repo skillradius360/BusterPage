@@ -1,27 +1,43 @@
-# Buster Frontend 🎨
+# Buster Frontend
 
-The user interface for **Buster**, an AI image detector built for speed and aesthetics, handling both individual URL submissions and multi-image carousel post previews.
+The user interface for Buster, an AI-powered authenticity checker for links and social posts.
 
 ## Tech Stack
-- **Next.js** (App/Pages router built on React)
-- **Tailwind CSS** (for styling, animations, and the UI)
-- **React Hooks** (for dynamic state routing, automatic viewport scrolling, etc)
+- Next.js 16
+- React 19
+- Tailwind CSS 4
+
+## Prerequisites
+- Node.js 20+ (recommended)
+- npm 10+
 
 ## Getting Started
-
-1. Navigate to the frontend directory:
+1. Clone the repository:
    ```bash
-   cd frontend/buster
+   git clone https://github.com/skillradius360/BusterPage.git
    ```
-
-2. Install dependencies:
+2. Move into the project:
+   ```bash
+   cd BusterPage
+   ```
+3. Install dependencies:
    ```bash
    npm install
    ```
-
-3. Start the development server:
+4. (Optional) Configure backend API base URL in `.env.local`:
+   ```bash
+   NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+   ```
+   If not set, the app defaults to `https://buster-3.onrender.com`.
+5. Start the development server:
    ```bash
    npm run dev
    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the live forensic dashboard. The frontend is fully connected to the local API endpoint (`http://localhost:8000/analyze`).
+Open `http://localhost:3000`.
+
+## Production Check
+```bash
+npm run build
+npm run start
+```
