@@ -66,7 +66,7 @@ export default function HeroSection() {
 
         try {
             const response = await fetch(
-                "http://localhost:8000/api/fact-check",
+                "https://buster-3.onrender.com/api/fact-check",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
